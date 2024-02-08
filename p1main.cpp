@@ -16,8 +16,6 @@
 #include "version1.h" // file containing Version 1 code
 #include "version2.h" // file containing Version 2 code
 
-using namespace std; // I normally use this, but feel free to delete it
-
 int main(int argc, char *argv[]) {
    // Main program goes here. The required steps have been copied into
    // this file as comments. Feel free to add more comments to help
