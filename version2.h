@@ -32,10 +32,19 @@
 
 class Version2 {
    private: // it's good OOP practice to make data members private
+      int parent;
+      int firstChild;
+      int youngerSibling;
+      int olderSibling;
 
    public:  // all methods are normally public
       Version2();
       ~Version2();
+
+      int getParent();
+      int getFirstChild();
+      int getYoungerSibling();
+      int getOlderSibling();
 
       int create(int parentPid);
       int destroy(int targetPid);

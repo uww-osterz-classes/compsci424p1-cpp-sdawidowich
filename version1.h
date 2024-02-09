@@ -29,13 +29,19 @@
 // Remember: use <angle brackets> for standard C++ headers/libraries
 // and "double quotes" for headers in the same directory as this file.
 #include <iostream>
+#include <list>
 
 class Version1 {
    private: // it's good OOP practice to make data members private
+      int parent;
+      std::list<int> children;
 
    public:  // all methods are normally public
       Version1();
       ~Version1();
+
+      int getParent();
+      std::list<int> getChildren();
 
       int create(int parentPid);
       int destroy(int targetPid);

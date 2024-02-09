@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 
    // Don't forget to delete anything that you created with "new"!
 
-   cout << "Builds without errors and runs to completion.\n";
+   std::cout << "Builds without errors and runs to completion.\n";
 
    return 0; // tells the OS that the program terminated normally
 }

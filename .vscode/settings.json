@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.db": "sqlite",
+        "list": "cpp"
+    }
+}
