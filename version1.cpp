@@ -64,5 +64,18 @@ type of this function to return the text to the main program
 for printing. It's your choice. 
 */
 void Version1::showProcessInfo() {
-
+    for (int i = 0; i < this->pcbArray.size(); i++) {
+        Version1PCB p = this->pcbArray[i];
+        std::cout << "Process " << i << ": parent is " << p.getParent() << " and ";
+        if ((p.getChildren().size() > 0)) {
+            std::cout << "children are";
+            for(auto child = p.getChildren().begin(); child != p.getChildren().end(); child++) {
+                std::cout << ' ' << *child;
+            }
+        }
+        else {
+            std::cout << "has no children";
+        }
+        std::cout << std::endl;
+    }
 }
