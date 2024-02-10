@@ -1,8 +1,8 @@
 /* COMPSCI 424 Program 1
    Name:
    
-   version2.h: contains the code to implement the process creation
-   hierarchy for Version 2, which does not use linked lists.
+   version1.h: contains the code to implement the process creation
+   hierarchy for Version 1, which uses linked lists.
 
    This is a template. Feel free to edit any of these files, even
    these pre-written comments or my provided code. You can add any
@@ -22,27 +22,27 @@
    .C files that are in your repository.
 */
 
-#ifndef VERSION2_H
-#define VERSION2_H
+#ifndef VERSION1_H
+#define VERSION1_H
 
 // You may need to add more #include directives.
 // Remember: use <angle brackets> for standard C++ headers/libraries
 // and "double quotes" for headers in the same directory as this file.
 #include <iostream>
 #include <vector>
-#include "Version2PCB.h"
+#include "./Version1PCB.h"
 
-class Version2 {
+class Version1 {
    private: // it's good OOP practice to make data members private
-      std::vector<Version2PCB> pcbArray;
+      std::vector<Version1PCB> pcbArray;
 
    public:  // all methods are normally public
-      Version2();
-      ~Version2();
+      Version1();
+      ~Version1();
 
       int create(int parentPid);
       int destroy(int targetPid);
       void showProcessInfo();
 };
 
-#endif  // VERSION2_H
+#endif  // VERSION1_H

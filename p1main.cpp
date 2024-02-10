@@ -13,8 +13,8 @@
 // Remember: use <angle brackets> for standard C++ headers/libraries
 // and "double quotes" for headers in the same directory as this file.
 #include <iostream>
-#include "version1.h" // file containing Version 1 code
-#include "version2.h" // file containing Version 2 code
+#include "./headers/version1.h" // file containing Version 1 code
+#include "./headers/version2.h" // file containing Version 2 code
 
 int main(int argc, char *argv[]) {
    // Main program goes here. The required steps have been copied into
