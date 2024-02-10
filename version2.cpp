@@ -14,24 +14,6 @@ Version2::~Version2() {
     */
 }
 
-// Getters
-
-int Version2::getParent() {
-    return this->parent;
-}
-
-int Version2::getFirstChild() {
-    return this->firstChild;
-}
-
-int Version2::getYoungerSibling() {
-    return this->youngerSibling;
-}
-
-int Version2::getOlderSibling() {
-    return this->olderSibling;
-}
-
 /* Creates a new child process of process with ID parentPid. 
 */
 int Version2::create(int parentPid) {

@@ -29,22 +29,16 @@
 // Remember: use <angle brackets> for standard C++ headers/libraries
 // and "double quotes" for headers in the same directory as this file.
 #include <iostream>
+#include <vector>
+#include "Version2PCB.h"
 
 class Version2 {
    private: // it's good OOP practice to make data members private
-      int parent;
-      int firstChild;
-      int youngerSibling;
-      int olderSibling;
+      std::vector<Version2PCB> pcbArray;
 
    public:  // all methods are normally public
       Version2();
       ~Version2();
-
-      int getParent();
-      int getFirstChild();
-      int getYoungerSibling();
-      int getOlderSibling();
 
       int create(int parentPid);
       int destroy(int targetPid);

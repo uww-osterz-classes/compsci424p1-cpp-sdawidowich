@@ -14,16 +14,6 @@ Version1::~Version1() {
     */
 }
 
-// Getters
-
-int Version1::getParent() {
-    return this->parent;
-}
-
-std::list<int> Version1::getChildren() {
-    return this->children;
-}
-
 /* Creates a new child process of process with ID parentPid. 
 */
 int Version1::create(int parentPid) {
