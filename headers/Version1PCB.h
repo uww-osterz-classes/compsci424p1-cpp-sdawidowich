@@ -8,6 +8,11 @@ private:
     std::list<int> children;
 
 public:
+    Version1PCB();
+    Version1PCB(int parent);
+
     int getParent();
     std::list<int> getChildren();
+
+    void addChild(int Pid);
 };

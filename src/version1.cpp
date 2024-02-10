@@ -4,7 +4,9 @@ Version1::Version1() {
       /* Default constructor. Use this to allocate (if needed) and
       initialize the PCB array, create the PCB for process 0, and do
       any other initialization that is needed. 
-      */ 
+      */
+     
+    this->pcbArray.push_back(Version1PCB());
 }
 
 Version1::~Version1() {
@@ -29,6 +31,13 @@ int Version1::create(int parentPid) {
     //    list of children
 
     // You can decide what the return value(s), if any, should be.
+    if (parentPid > this->pcbArray.size() - 1 || parentPid < 0) {
+        return 1;
+    }
+
+    this->pcbArray.push_back(Version1PCB(parentPid));
+    this->pcbArray[parentPid].addChild(this->pcbArray.size() - 1);
+
     return 0; // often means "success" or "terminated normally"
 }
 
