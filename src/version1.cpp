@@ -87,11 +87,13 @@ for printing. It's your choice.
 void Version1::showProcessInfo() {
     for (int i = 0; i < this->pcbArray.size(); i++) {
         Version1PCB p = this->pcbArray[i];
+        std::list<int> pChildren = p.getChildren();
+
         std::cout << "Process " << i << ": parent is " << p.getParent() << " and ";
-        if ((p.getChildren().size() > 0)) {
+        if ((pChildren.size() > 0)) {
             std::cout << "children are";
-            for(auto child = p.getChildren().begin(); child != p.getChildren().end(); child++) {
-                std::cout << ' ' << *child;
+            for(auto& child : pChildren) {
+                std::cout << ' ' << child;
             }
         }
         else {

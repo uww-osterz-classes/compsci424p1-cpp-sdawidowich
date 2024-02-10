@@ -16,7 +16,7 @@ std::list<int> Version1PCB::getChildren() {
 
 // Setters
 void Version1PCB::addChild(int targetPid) {
-    this->children.insert(this->children.end(), targetPid);
+    this->children.push_back(targetPid);
 }
 
 void Version1PCB::removeChild(int targetPid) {
