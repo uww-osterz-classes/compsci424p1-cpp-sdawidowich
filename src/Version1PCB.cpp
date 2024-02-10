@@ -15,6 +15,15 @@ std::list<int> Version1PCB::getChildren() {
 }
 
 // Setters
-void Version1PCB::addChild(int Pid) {
-    this->children.insert(this->children.end(), Pid);
+void Version1PCB::addChild(int targetPid) {
+    this->children.insert(this->children.end(), targetPid);
+}
+
+void Version1PCB::removeChild(int targetPid) {
+    for (auto child = this->children.begin(); child != this->children.end(); child++) {
+        if (*child == targetPid) {
+            this->children.erase(child);
+            return;
+        }
+    }
 }

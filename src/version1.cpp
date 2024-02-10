@@ -59,6 +59,18 @@ int Version1::destroy(int targetPid) {
     // 3. Deallocate targetPid's PCB and mark its PCB array entry
     //    as "free"
 
+    if (targetPid > this->pcbArray.size() - 1 || targetPid < 0) {
+        return 1;
+    }
+
+    auto children = this->pcbArray[targetPid].getChildren();
+    for (auto& child : children) {
+        this->destroy(child);
+        this->pcbArray[targetPid].removeChild(child);
+    }
+
+    this->pcbArray[targetPid] = NULL;
+
     // You can decide what the return value(s), if any, should be.
     return 0; // often means "success" or "terminated normally"
 }

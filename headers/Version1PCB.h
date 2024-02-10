@@ -14,5 +14,6 @@ public:
     int getParent();
     std::list<int> getChildren();
 
-    void addChild(int Pid);
+    void addChild(int targetPid);
+    void removeChild(int targetPid);
 };
