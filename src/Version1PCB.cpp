@@ -1,4 +1,4 @@
-#include "Version1PCB.h"
+#include "../headers/Version1PCB.h"
 
 Version1PCB::Version1PCB() : parent(-1), children(std::list<int>()) { }
 Version1PCB::Version1PCB(int parent) : Version1PCB() { 

@@ -1,4 +1,4 @@
-#include "./version2.h"
+#include "../headers/version2.h"
 
 Version2::Version2() { 
     /* Default constructor. Use this to allocate (if needed) and

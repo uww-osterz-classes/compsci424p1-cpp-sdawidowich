@@ -129,5 +129,7 @@ int main(int argc, char *argv[]) {
 
    std::cout << "Builds without errors and runs to completion.\n";
 
+   std::cin.get();
+
    return 0; // tells the OS that the program terminated normally
 }
