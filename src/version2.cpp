@@ -5,6 +5,7 @@ Version2::Version2() {
     initialize the PCB array, create the PCB for process 0, and do
     any other initialization that is needed. 
     */
+    this->pcbArray.push_back(Version2PCB());
 }
 
 Version2::~Version2() {
@@ -27,6 +28,27 @@ int Version2::create(int parentPid) {
 
     // 2. Connect the new PCB object to its parent, its older
     //    sibling (if any), and its younger sibling (if any)
+    
+    if (parentPid > this->pcbArray.size() - 1 || parentPid < 0) {
+        return 1;
+    }
+
+    int pid = this->pcbArray.size();
+
+    this->pcbArray.push_back(Version2PCB(parentPid));
+    
+    if (this->pcbArray[parentPid].getFirstChild() == -1) {
+        this->pcbArray[parentPid].setFirstChild(pid);
+    }
+    else {
+        int lastChild = this->pcbArray[parentPid].getFirstChild();
+        while (this->pcbArray[lastChild].getYoungerSibling() != -1) {
+            lastChild = this->pcbArray[lastChild].getYoungerSibling();
+        }
+
+        this->pcbArray[lastChild].setYoungerSibling(pid);
+        this->pcbArray[pid].setOlderSibling(lastChild);
+    }
 
     // You can decide what the return value(s), if any, should be.
     return 0; // often means "success" or "terminated normally"
@@ -51,6 +73,33 @@ int Version2::destroy(int targetPid) {
     // 3. Deallocate targetPid's PCB and mark its PCB array entry
     //    as "free"
 
+    
+    if (targetPid > this->pcbArray.size() - 1 || targetPid < 0) {
+        return 1;
+    }
+
+    int child = this->pcbArray[targetPid].getFirstChild();
+    while (child != -1) {
+        destroy(child);
+        child = this->pcbArray[child].getYoungerSibling();
+    }
+
+    int os = this->pcbArray[targetPid].getOlderSibling();
+    int ys = this->pcbArray[targetPid].getYoungerSibling();
+    int parent = this->pcbArray[targetPid].getParent();
+    if (os != -1) {
+        this->pcbArray[os].setOlderSibling(ys);
+    }
+    else {
+        this->pcbArray[parent].setFirstChild(ys);
+    }
+
+    if (ys != -1) {
+        this->pcbArray[ys].setOlderSibling(os);
+    }
+
+    this->pcbArray[targetPid] = NULL;
+
     // You can decide what the return value(s), if any, should be.
     return 0; // often means "success" or "terminated normally"
 }
@@ -65,7 +114,24 @@ int Version2::destroy(int targetPid) {
     for printing. It's your choice. 
 */
 void Version2::showProcessInfo() {
+    for (int i = 0; i < this->pcbArray.size(); i++) {
+        Version2PCB p = this->pcbArray[i];
+        
+        std::cout << "Process " << i << ": parent is " << p.getParent() << " and ";
+        int child = this->pcbArray[i].getFirstChild();
+        
+        if (child == -1) {
+            std::cout << "has no children" << std::endl;
+            continue;
+        }
 
+        std::cout << "children are";
+        while (child != -1) {
+            std::cout << ' ' << child;
+            child = this->pcbArray[child].getYoungerSibling();
+        }
+        std::cout << std::endl;
+    }
 }
 
 /* If you need or want more functions, feel free to add them. */

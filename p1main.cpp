@@ -64,7 +64,6 @@ int main(int argc, char *argv[]) {
 
       // Convert integer string to integer type, add action to command list
       int n = std::stoi(str_n);
-      std::cout << action << " " << n << std::endl;
       if (action == "create") {
          commandList.push_back({ Action::CREATE, n });
       }
@@ -83,6 +82,7 @@ int main(int argc, char *argv[]) {
    //    calling its showProcessTree method after each command to show
    //    the changes in the tree after each command.
 
+   std::cout << "Version 1" << std::endl;
    for (auto& c : commandList) {
       if (c.first == Action::CREATE) {
          v1.create(c.second);
@@ -96,11 +96,22 @@ int main(int argc, char *argv[]) {
    
 
    // 6. Repeat step 5, but with the Version 2 object.
+   std::cout << "Version 2" << std::endl;
+   for (auto& c : commandList) {
+      if (c.first == Action::CREATE) {
+         v2.create(c.second);
+      }
+      else {
+         v2.destroy(c.second);
+      }
+
+      v2.showProcessInfo();
+   }
 
    // 7. Store the current system time in a variable
    
    // ... then run the command sequence 200 times with Version 1.
-   std::clock_t t = std::clock();
+   std::clock_t t1 = std::clock();
    
    for (int i = 0; i < 200; i++) {
       for (auto& c : commandList) {
@@ -112,18 +123,32 @@ int main(int argc, char *argv[]) {
          }
       }
    }
-
-   t = std::clock() - t;
-
-   std::cout << t << std::endl;
    
-
    // ... After this, store the new current system time in a second
    //     variable. Subtract the start time from the end time to get
    //     the Version 1 running time, then display the Version 1
    //     running time.
 
+   t1 = std::clock() - t1;
+   std::cout << t1 << std::endl;
+
    // 8. Repeat step 7, but with the Version 2 object.
+
+   std::clock_t t2 = std::clock();
+   
+   for (int i = 0; i < 200; i++) {
+      for (auto& c : commandList) {
+         if (c.first == Action::CREATE) {
+            v2.create(c.second);
+         }
+         else {
+            v2.destroy(c.second);
+         }
+      }
+   }
+
+   t2 = std::clock() - t2;
+   std::cout << t2 << std::endl;
 
    // Don't forget to delete anything that you created with "new"!
 
