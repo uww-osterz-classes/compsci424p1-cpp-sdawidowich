@@ -34,9 +34,11 @@ int Version1::create(int parentPid) {
     if (parentPid > this->pcbArray.size() - 1 || parentPid < 0) {
         return 1;
     }
+    
+    int pid = this->pcbArray.size();
 
     this->pcbArray.push_back(Version1PCB(parentPid));
-    this->pcbArray[parentPid].addChild(this->pcbArray.size() - 1);
+    this->pcbArray[parentPid].addChild(pid);
 
     return 0; // often means "success" or "terminated normally"
 }
