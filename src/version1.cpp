@@ -74,6 +74,7 @@ int Version1::destroy(int targetPid) {
         this->pcbArray[targetPid]->removeChild(child);
     }
 
+    delete this->pcbArray[targetPid];
     this->pcbArray[targetPid] = nullptr;
 
     // You can decide what the return value(s), if any, should be.
@@ -94,7 +95,7 @@ void Version1::showProcessInfo() {
         if (this->pcbArray[i] == nullptr) {
             continue;
         }
-        
+
         Version1PCB* p = this->pcbArray[i];
         std::list<int> pChildren = p->getChildren();
 

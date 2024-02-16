@@ -93,7 +93,7 @@ int Version2::destroy(int targetPid) {
     if (os != -1) {
         this->pcbArray[os]->setOlderSibling(ys);
     }
-    else {
+    else if (parent != -1) {
         this->pcbArray[parent]->setFirstChild(ys);
     }
 
@@ -101,6 +101,7 @@ int Version2::destroy(int targetPid) {
         this->pcbArray[ys]->setOlderSibling(os);
     }
 
+    delete this->pcbArray[targetPid];
     this->pcbArray[targetPid] = nullptr;
 
     // You can decide what the return value(s), if any, should be.
@@ -121,7 +122,7 @@ void Version2::showProcessInfo() {
         if (this->pcbArray[i] == nullptr) {
             continue;
         }
-        
+
         Version2PCB* p = this->pcbArray[i];
         
         std::cout << "Process " << i << ": parent is " << p->getParent() << " and ";
