@@ -43,6 +43,9 @@ class Version1 {
       int create(int parentPid);
       int destroy(int targetPid);
       void showProcessInfo();
+
+      void deletePCBs();
+      void resetPCBArray();
 };
 
 #endif  // VERSION1_H

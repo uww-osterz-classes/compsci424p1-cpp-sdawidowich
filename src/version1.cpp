@@ -114,3 +114,14 @@ void Version1::showProcessInfo() {
         std::cout << std::endl;
     }
 }
+
+void Version1::deletePCBs() {
+    for (auto& p : this->pcbArray) {
+        delete p;
+    }
+}
+
+void Version1::resetPCBArray() {
+    this->deletePCBs();
+    this->pcbArray.clear();
+}

@@ -114,6 +114,7 @@ int main(int argc, char *argv[]) {
    std::clock_t t1 = std::clock();
    
    for (int i = 0; i < 200; i++) {
+      v1.resetPCBArray();
       for (auto& c : commandList) {
          if (c.first == Action::CREATE) {
             v1.create(c.second);
@@ -137,6 +138,7 @@ int main(int argc, char *argv[]) {
    std::clock_t t2 = std::clock();
    
    for (int i = 0; i < 200; i++) {
+      v1.resetPCBArray();
       for (auto& c : commandList) {
          if (c.first == Action::CREATE) {
             v2.create(c.second);

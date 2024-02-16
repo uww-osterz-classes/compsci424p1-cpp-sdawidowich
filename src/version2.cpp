@@ -83,8 +83,9 @@ int Version2::destroy(int targetPid) {
 
     int child = this->pcbArray[targetPid]->getFirstChild();
     while (child != -1) {
+        int ys = this->pcbArray[child]->getYoungerSibling();
         destroy(child);
-        child = this->pcbArray[child]->getYoungerSibling();
+        child = ys;
     }
 
     int os = this->pcbArray[targetPid]->getOlderSibling();
@@ -143,3 +144,14 @@ void Version2::showProcessInfo() {
 }
 
 /* If you need or want more functions, feel free to add them. */
+
+void Version2::deletePCBs() {
+    for (auto& p : this->pcbArray) {
+        delete p;
+    }
+}
+
+void Version2::resetPCBArray() {
+    this->deletePCBs();
+    this->pcbArray.clear();
+}
