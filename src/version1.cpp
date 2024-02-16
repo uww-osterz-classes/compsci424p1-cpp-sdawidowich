@@ -124,4 +124,5 @@ void Version1::deletePCBs() {
 void Version1::resetPCBArray() {
     this->deletePCBs();
     this->pcbArray.clear();
+    this->pcbArray.push_back(new Version1PCB());
 }

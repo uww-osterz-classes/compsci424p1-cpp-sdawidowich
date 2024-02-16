@@ -92,7 +92,7 @@ int Version2::destroy(int targetPid) {
     int ys = this->pcbArray[targetPid]->getYoungerSibling();
     int parent = this->pcbArray[targetPid]->getParent();
     if (os != -1) {
-        this->pcbArray[os]->setOlderSibling(ys);
+        this->pcbArray[os]->setYoungerSibling(ys);
     }
     else if (parent != -1) {
         this->pcbArray[parent]->setFirstChild(ys);
@@ -154,4 +154,5 @@ void Version2::deletePCBs() {
 void Version2::resetPCBArray() {
     this->deletePCBs();
     this->pcbArray.clear();
+    this->pcbArray.push_back(new Version2PCB());
 }
