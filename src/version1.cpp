@@ -34,7 +34,7 @@ int Version1::create(int parentPid) {
     //    list of children
 
     // You can decide what the return value(s), if any, should be.
-    if (parentPid > this->pcbArray.size() - 1 || parentPid < 0) {
+    if (parentPid > this->pcbArray.size() - 1 || parentPid < 0 || this->pcbArray[parentPid] == nullptr) {
         return 1;
     }
     
@@ -64,15 +64,17 @@ int Version1::destroy(int targetPid) {
     // 3. Deallocate targetPid's PCB and mark its PCB array entry
     //    as "free"
 
-    if (targetPid > this->pcbArray.size() - 1 || targetPid < 0) {
+    if (targetPid > this->pcbArray.size() - 1 || targetPid < 0 || this->pcbArray[targetPid] == nullptr) {
         return 1;
     }
 
     auto children = this->pcbArray[targetPid]->getChildren();
     for (auto& child : children) {
         this->destroy(child);
-        this->pcbArray[targetPid]->removeChild(child);
     }
+    
+    int parent = this->pcbArray[targetPid]->getParent();
+    this->pcbArray[parent]->removeChild(targetPid);
 
     delete this->pcbArray[targetPid];
     this->pcbArray[targetPid] = nullptr;

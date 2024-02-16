@@ -32,7 +32,7 @@ int Version2::create(int parentPid) {
     // 2. Connect the new PCB object to its parent, its older
     //    sibling (if any), and its younger sibling (if any)
     
-    if (parentPid > this->pcbArray.size() - 1 || parentPid < 0) {
+    if (parentPid > this->pcbArray.size() - 1 || parentPid < 0  || this->pcbArray[parentPid] == nullptr) {
         return 1;
     }
 
@@ -77,7 +77,7 @@ int Version2::destroy(int targetPid) {
     //    as "free"
 
     
-    if (targetPid > this->pcbArray.size() - 1 || targetPid < 0) {
+    if (targetPid > this->pcbArray.size() - 1 || targetPid < 0 || this->pcbArray[targetPid] == nullptr) {
         return 1;
     }
 
