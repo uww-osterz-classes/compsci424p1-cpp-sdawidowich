@@ -34,7 +34,7 @@
 
 class Version2 {
    private: // it's good OOP practice to make data members private
-      std::vector<Version2PCB> pcbArray;
+      std::vector<Version2PCB*> pcbArray;
 
    public:  // all methods are normally public
       Version2();

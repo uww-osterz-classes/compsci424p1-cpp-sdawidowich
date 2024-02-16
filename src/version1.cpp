@@ -6,7 +6,7 @@ Version1::Version1() {
       any other initialization that is needed. 
       */
      
-    this->pcbArray.push_back(Version1PCB());
+    this->pcbArray.push_back(new Version1PCB());
 }
 
 Version1::~Version1() {
@@ -14,6 +14,9 @@ Version1::~Version1() {
     the lifetime of this object, and you haven't yet "delete"d
     it, "delete" it (using the "delete" keyword) here.
     */
+    for (auto& p : this->pcbArray) {
+        delete p;
+    }
 }
 
 /* Creates a new child process of process with ID parentPid. 
@@ -37,8 +40,8 @@ int Version1::create(int parentPid) {
     
     int pid = this->pcbArray.size();
 
-    this->pcbArray.push_back(Version1PCB(parentPid));
-    this->pcbArray[parentPid].addChild(pid);
+    this->pcbArray.push_back(new Version1PCB(parentPid));
+    this->pcbArray[parentPid]->addChild(pid);
 
     return 0; // often means "success" or "terminated normally"
 }
@@ -65,13 +68,13 @@ int Version1::destroy(int targetPid) {
         return 1;
     }
 
-    auto children = this->pcbArray[targetPid].getChildren();
+    auto children = this->pcbArray[targetPid]->getChildren();
     for (auto& child : children) {
         this->destroy(child);
-        this->pcbArray[targetPid].removeChild(child);
+        this->pcbArray[targetPid]->removeChild(child);
     }
 
-    this->pcbArray[targetPid] = NULL;
+    this->pcbArray[targetPid] = nullptr;
 
     // You can decide what the return value(s), if any, should be.
     return 0; // often means "success" or "terminated normally"
@@ -88,10 +91,14 @@ for printing. It's your choice.
 */
 void Version1::showProcessInfo() {
     for (int i = 0; i < this->pcbArray.size(); i++) {
-        Version1PCB p = this->pcbArray[i];
-        std::list<int> pChildren = p.getChildren();
+        if (this->pcbArray[i] == nullptr) {
+            continue;
+        }
+        
+        Version1PCB* p = this->pcbArray[i];
+        std::list<int> pChildren = p->getChildren();
 
-        std::cout << "Process " << i << ": parent is " << p.getParent() << " and ";
+        std::cout << "Process " << i << ": parent is " << p->getParent() << " and ";
         if ((pChildren.size() > 0)) {
             std::cout << "children are";
             for(auto& child : pChildren) {

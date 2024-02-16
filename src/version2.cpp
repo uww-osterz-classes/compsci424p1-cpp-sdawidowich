@@ -5,7 +5,7 @@ Version2::Version2() {
     initialize the PCB array, create the PCB for process 0, and do
     any other initialization that is needed. 
     */
-    this->pcbArray.push_back(Version2PCB());
+    this->pcbArray.push_back(new Version2PCB());
 }
 
 Version2::~Version2() {
@@ -13,6 +13,9 @@ Version2::~Version2() {
     the lifetime of this object, and you haven't yet "delete"d
     it, "delete" it (using the "delete" keyword) here.
     */
+    for (auto& p : this->pcbArray) {
+        delete p;
+    }
 }
 
 /* Creates a new child process of process with ID parentPid. 
@@ -35,19 +38,19 @@ int Version2::create(int parentPid) {
 
     int pid = this->pcbArray.size();
 
-    this->pcbArray.push_back(Version2PCB(parentPid));
+    this->pcbArray.push_back(new Version2PCB(parentPid));
     
-    if (this->pcbArray[parentPid].getFirstChild() == -1) {
-        this->pcbArray[parentPid].setFirstChild(pid);
+    if (this->pcbArray[parentPid]->getFirstChild() == -1) {
+        this->pcbArray[parentPid]->setFirstChild(pid);
     }
     else {
-        int lastChild = this->pcbArray[parentPid].getFirstChild();
-        while (this->pcbArray[lastChild].getYoungerSibling() != -1) {
-            lastChild = this->pcbArray[lastChild].getYoungerSibling();
+        int lastChild = this->pcbArray[parentPid]->getFirstChild();
+        while (this->pcbArray[lastChild]->getYoungerSibling() != -1) {
+            lastChild = this->pcbArray[lastChild]->getYoungerSibling();
         }
 
-        this->pcbArray[lastChild].setYoungerSibling(pid);
-        this->pcbArray[pid].setOlderSibling(lastChild);
+        this->pcbArray[lastChild]->setYoungerSibling(pid);
+        this->pcbArray[pid]->setOlderSibling(lastChild);
     }
 
     // You can decide what the return value(s), if any, should be.
@@ -78,27 +81,27 @@ int Version2::destroy(int targetPid) {
         return 1;
     }
 
-    int child = this->pcbArray[targetPid].getFirstChild();
+    int child = this->pcbArray[targetPid]->getFirstChild();
     while (child != -1) {
         destroy(child);
-        child = this->pcbArray[child].getYoungerSibling();
+        child = this->pcbArray[child]->getYoungerSibling();
     }
 
-    int os = this->pcbArray[targetPid].getOlderSibling();
-    int ys = this->pcbArray[targetPid].getYoungerSibling();
-    int parent = this->pcbArray[targetPid].getParent();
+    int os = this->pcbArray[targetPid]->getOlderSibling();
+    int ys = this->pcbArray[targetPid]->getYoungerSibling();
+    int parent = this->pcbArray[targetPid]->getParent();
     if (os != -1) {
-        this->pcbArray[os].setOlderSibling(ys);
+        this->pcbArray[os]->setOlderSibling(ys);
     }
     else {
-        this->pcbArray[parent].setFirstChild(ys);
+        this->pcbArray[parent]->setFirstChild(ys);
     }
 
     if (ys != -1) {
-        this->pcbArray[ys].setOlderSibling(os);
+        this->pcbArray[ys]->setOlderSibling(os);
     }
 
-    this->pcbArray[targetPid] = NULL;
+    this->pcbArray[targetPid] = nullptr;
 
     // You can decide what the return value(s), if any, should be.
     return 0; // often means "success" or "terminated normally"
@@ -115,10 +118,14 @@ int Version2::destroy(int targetPid) {
 */
 void Version2::showProcessInfo() {
     for (int i = 0; i < this->pcbArray.size(); i++) {
-        Version2PCB p = this->pcbArray[i];
+        if (this->pcbArray[i] == nullptr) {
+            continue;
+        }
         
-        std::cout << "Process " << i << ": parent is " << p.getParent() << " and ";
-        int child = this->pcbArray[i].getFirstChild();
+        Version2PCB* p = this->pcbArray[i];
+        
+        std::cout << "Process " << i << ": parent is " << p->getParent() << " and ";
+        int child = p->getFirstChild();
         
         if (child == -1) {
             std::cout << "has no children" << std::endl;
@@ -128,7 +135,7 @@ void Version2::showProcessInfo() {
         std::cout << "children are";
         while (child != -1) {
             std::cout << ' ' << child;
-            child = this->pcbArray[child].getYoungerSibling();
+            child = this->pcbArray[child]->getYoungerSibling();
         }
         std::cout << std::endl;
     }
