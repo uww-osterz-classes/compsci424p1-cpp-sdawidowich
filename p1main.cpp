@@ -131,14 +131,14 @@ int main(int argc, char *argv[]) {
    //     running time.
 
    t1 = std::clock() - t1;
-   std::cout << t1 << std::endl;
+   std::cout << "Version 1 executed the command list 200 times in " << t1 << " time units" << std::endl;
 
    // 8. Repeat step 7, but with the Version 2 object.
 
    std::clock_t t2 = std::clock();
    
    for (int i = 0; i < 200; i++) {
-      v1.resetPCBArray();
+      v2.resetPCBArray();
       for (auto& c : commandList) {
          if (c.first == Action::CREATE) {
             v2.create(c.second);
@@ -150,7 +150,7 @@ int main(int argc, char *argv[]) {
    }
 
    t2 = std::clock() - t2;
-   std::cout << t2 << std::endl;
+   std::cout << "Version 2 executed the command list 200 times in " << t2 << " time units" << std::endl;
 
    // Don't forget to delete anything that you created with "new"!
 
