@@ -75,8 +75,8 @@ int main(int argc, char *argv[]) {
 
    // 4. Create an object of the Version 1 class and an object of the
    //    Version 2 class.
-   Version1 v1;
-   Version2 v2;
+   Version1* v1 = new Version1();
+   Version2* v2 = new Version2();
 
    // 5. Run the command sequence once with the Version 1 object, 
    //    calling its showProcessTree method after each command to show
@@ -85,13 +85,13 @@ int main(int argc, char *argv[]) {
    std::cout << "Version 1" << std::endl;
    for (auto& c : commandList) {
       if (c.first == Action::CREATE) {
-         v1.create(c.second);
+         v1->create(c.second);
       }
       else {
-         v1.destroy(c.second);
+         v1->destroy(c.second);
       }
 
-      v1.showProcessInfo();
+      v1->showProcessInfo();
    }
    
 
@@ -99,13 +99,13 @@ int main(int argc, char *argv[]) {
    std::cout << "Version 2" << std::endl;
    for (auto& c : commandList) {
       if (c.first == Action::CREATE) {
-         v2.create(c.second);
+         v2->create(c.second);
       }
       else {
-         v2.destroy(c.second);
+         v2->destroy(c.second);
       }
 
-      v2.showProcessInfo();
+      v2->showProcessInfo();
    }
 
    // 7. Store the current system time in a variable
@@ -114,13 +114,13 @@ int main(int argc, char *argv[]) {
    std::clock_t t1 = std::clock();
    
    for (int i = 0; i < 200; i++) {
-      v1.resetPCBArray();
+      v1->resetPCBArray();
       for (auto& c : commandList) {
          if (c.first == Action::CREATE) {
-            v1.create(c.second);
+            v1->create(c.second);
          }
          else {
-            v1.destroy(c.second);
+            v1->destroy(c.second);
          }
       }
    }
@@ -138,19 +138,22 @@ int main(int argc, char *argv[]) {
    std::clock_t t2 = std::clock();
    
    for (int i = 0; i < 200; i++) {
-      v2.resetPCBArray();
+      v2->resetPCBArray();
       for (auto& c : commandList) {
          if (c.first == Action::CREATE) {
-            v2.create(c.second);
+            v2->create(c.second);
          }
          else {
-            v2.destroy(c.second);
+            v2->destroy(c.second);
          }
       }
    }
 
    t2 = std::clock() - t2;
    std::cout << "Version 2 executed the command list 200 times in " << t2 << " time units" << std::endl;
+
+   delete v1;
+   delete v2;
 
    // Don't forget to delete anything that you created with "new"!
 

@@ -14,9 +14,7 @@ Version1::~Version1() {
     the lifetime of this object, and you haven't yet "delete"d
     it, "delete" it (using the "delete" keyword) here.
     */
-    for (auto& p : this->pcbArray) {
-        delete p;
-    }
+    this->deletePCBs();
 }
 
 /* Creates a new child process of process with ID parentPid. 
